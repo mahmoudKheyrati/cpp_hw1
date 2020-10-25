@@ -52,8 +52,8 @@ string User::hash(string value) {
 
 User::User(int id, string username, string password, string email) :
         id(id), username(std::move(username)),
-        password(std::move(password)),
-        email(std::move(email)) {
+        email(std::move(email)){
+    setPassword(password,password);
 
 }
 
