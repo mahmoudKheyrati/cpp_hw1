@@ -7,7 +7,7 @@
 
 Response User::resetPassword(string currentPassword, string newPassword, string confirmPassword) {
     if (this->password == hash(std::move(currentPassword))) {
-        setPassword(newPassword, currentPassword);
+        setPassword(newPassword, confirmPassword);
     } else {
         return Error(400, "password is wrong!");
     }
@@ -15,7 +15,7 @@ Response User::resetPassword(string currentPassword, string newPassword, string 
 
 Response User::setPassword(string newPassword, string confirmPassword) {
     if (newPassword == confirmPassword) {
-        this->password = newPassword;
+        this->password = hash(newPassword);
         return Success(200, "password changed");
     }
     return Error(400, "confirmPassword is wrong");
