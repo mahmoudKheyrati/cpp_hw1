@@ -22,12 +22,13 @@ Response User::setPassword(string newPassword, string confirmPassword) {
 
 }
 
-Response User::login(string username, string password) throw(Exception) {
+User User::login(string username, string password) throw(Exception) {
     bool isUserExists = DataBaseRepository::getDataBase()->isUserExists(username);
     if (isUserExists) {
         auto user = DataBaseRepository::getDataBase()->findUserByUserName(username);
         if (user.password == hash(password)) {
             std::cout << "you are successfully login with username: " + username << std::endl;
+            return user;
         } else {
             throw Exception("password is wrong!");
         }
@@ -36,14 +37,17 @@ Response User::login(string username, string password) throw(Exception) {
     }
 }
 
-Response User::signup(string username, string password, string confirmPassword, string email) throw(Exception) {
+User User::signup(string username, string password, string confirmPassword, string email) throw(Exception) {
     bool isUserExists = DataBaseRepository::getDataBase()->isUserExists(username);
 
     if (isUserExists) throw Exception("username is already taken!");
     if (password != confirmPassword) throw Exception("confirmPassword doesn't match the password");
 
-    return DataBaseRepository::getDataBase()->addUser(User(0, username, password, email));
 
+    Response response = DataBaseRepository::getDataBase()->addUser(User(0, username, password, email));
+    if (!instanceof<Success>(&response)) throw response.getMessage();
+
+    return login(username, password);
 }
 
 string User::hash(string value) {

@@ -29,9 +29,9 @@ public:
 
     Response setPassword(string newPassword, string confirmPassword);
 
-    static Response login(string username, string password) throw(Exception);
+    static User login(string username, string password) throw(Exception);
 
-    static Response signup(string username, string password, string confirmPassword, string email) throw(Exception);
+    static User signup(string username, string password, string confirmPassword, string email) throw(Exception);
 
     static string hash(string value);
 };
