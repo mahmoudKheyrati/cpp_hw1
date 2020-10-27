@@ -45,9 +45,12 @@ User User::signup(string username, string password, string confirmPassword, stri
 
 
     Response response = DataBaseRepository::getDataBase()->addUser(User(0, username, password, email));
-    if (!instanceof<Success>(&response)) throw response.getMessage();
+    if (instanceof<Success>(&response)){
+        throw response.getMessage();
+    }
 
-    return login(username, password);
+    auto user = User::login(username, password);
+    return user;
 }
 
 string User::hash(string value) {
