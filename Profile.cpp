@@ -59,3 +59,11 @@ Gender Profile::getGender() const {
 void Profile::setId(int id) {
     Profile::id = id;
 }
+
+void Profile::addFollowing(User user) {
+    followings.push_back(user);
+}
+
+void Profile::addFollower(User user) {
+    followers.push_back(user);
+}

@@ -47,4 +47,8 @@ public:
 
     void setPrivate(bool isPrivate);
 
+    void addFollower(User user);
+
+    void addFollowing(User user);
+
 };
